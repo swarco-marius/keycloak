@@ -33,7 +33,7 @@
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
       <td *ngFor="let col of columns" [ngSwitch]="col.field" class="column">
-        <span *ngSwitchCase="'date'">{{rowData[col.field] | date: 'dd/MM/yy HH:mm:ss'}}</span>
+        <span *ngSwitchCase="'date'">{{rowData[col.field]}}</span>
         <span *ngSwitchCase="'description'" pTooltip="{{rowData[col.field].length > 40 ? rowData[col.field] : ''}}">{{rowData[col.field]}}</span>
         <span *ngSwitchDefault>{{rowData[col.field]}}</span>        
       </td>

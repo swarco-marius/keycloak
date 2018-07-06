@@ -4,6 +4,8 @@ import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 import { DataService } from '../data.service';
 import { Table, Item } from '../models';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
@@ -35,6 +37,9 @@ export class DataTableComponent implements OnInit {
     this.dataService.getData()
       .subscribe((data: Table)  => {
         console.log(data);
+        data.tableData.map(element =>
+          element.date = moment(element.date).format('MMMM Do YYYY, h:mm:ss a')
+        );
         this.tableData = data.tableData;
         this.tableHeadline = data.headline;
         this.tableTotalRecords = this.tableData.length;
@@ -66,6 +71,7 @@ export class DataTableComponent implements OnInit {
   }
 
   onGlobalFilter(event, dt) {
+    console.log(event.target.value);
     dt.filterGlobal(event.target.value, 'contains');
   }
 }
