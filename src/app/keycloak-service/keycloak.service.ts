@@ -53,7 +53,7 @@ export class KeycloakService {
                 });
         });
     }
-    
+
     /**
      * Expose the underlying Keycloak javascript adapter.
      */
@@ -76,11 +76,11 @@ export class KeycloakService {
     account() {
         KeycloakService.keycloakAuth.accountManagement();
     }
-    
+
     authServerUrl(): string {
         return KeycloakService.keycloakAuth.authServerUrl;
     }
-    
+
     realm(): string {
         return KeycloakService.keycloakAuth.realm;
     }
