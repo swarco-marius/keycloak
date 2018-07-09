@@ -21,8 +21,10 @@ import {KeycloakLoginOptions} from './keycloak.d';
 // from the server, you get a compile-time warning on use of the Keycloak()
 // method below.  I'm not sure how to fix this, but it's certainly cleaner
 // to get keycloak.js from the server.
-// 
-import * as Keycloak from './keycloak';
+//
+// import * as Keycloak from './keycloak';
+
+declare const Keycloak: any;
 
 export type KeycloakClient = Keycloak.KeycloakInstance;
 type InitOptions = Keycloak.KeycloakInitOptions;
@@ -101,4 +103,8 @@ export class KeycloakService {
             }
         });
     }
+
+    getProfile(): any {
+      return KeycloakService.keycloakAuth.subject;
+   }
 }

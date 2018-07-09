@@ -4,13 +4,10 @@
       <button *ngIf="authenticated()" name="logoutBtn" (click)="logout()">Logout</button>
       <button id="accountBtn" name="accountBtn" (click)="account()">Account</button>
   </div>
-
-  <div class="content">
-      <button name="publicBtn" (click)="request('public')">Invoke Public</button>
-      <button name="securedBtn" (click)="request('secured')">Invoke Secured</button>
-      <button name="adminBtn" (click)="request('admin')">Invoke Admin</button>
-
-      <div class="message"><span id="message" class="{{errorClass}}">{{message}}</span></div>
+  <br>
+  <div>
+    <button name="realm" (click)="realm()">Realm</button>
+    <button name="account" (click)="account1()">Account</button>
   </div>
 </div>
 

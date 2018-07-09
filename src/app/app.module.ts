@@ -20,7 +20,7 @@ import { KEYCLOAK_HTTP_PROVIDER } from './keycloak-service/keycloak.http';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
   ],
   providers: [
     KeycloakService,

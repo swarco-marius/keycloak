@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from './keycloak-service/keycloak.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { environment } from '../environments/environment';
+import { KeycloakHttp } from './keycloak-service/keycloak.http';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private serviceUrl = 'http://127.0.0.1:8080/service/';
+  private serviceUrl = 'http://localhost:8080/auth/realms/demo/account';
+  private serverPath = environment.keyCloakPath;
 
   public message: string;
   public errorClass: string;
@@ -30,6 +34,63 @@ export class AppComponent {
 
   account() {
     this.kc.account();
+  }
+
+  private createHeaders(token: string): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+  }
+
+  realm() {
+    // this.http.get(`${this.serverPath}/auth/realms/${this.kc.realm()}`)  // is working
+
+    // this.http.delete('http://localhost:8080/auth/demo/attack-detection/brute-force/users')
+    // this.http.get('http://localhost:8080/auth/demo/attack-detection/brute-force/users/e77e3713-c1dc-46bc-b41d-777957699d09')
+    // this.http.delete('http://localhost:8080/auth/demo/attack-detection/brute-force/users/e77e3713-c1dc-46bc-b41d-777957699d09')
+
+    // this.http.get(`${this.kc.authServerUrl()}/${this.kc.realm()}/clients`)
+
+    // this.http.get(`${this.serverPath}/auth/realms/${this.kc.realm()}`)
+    // this.http.get(`${this.kc.authServerUrl()}/`)
+    // this.http.get(`${this.kc.authServerUrl()}/${this.kc.realm()}/primeng/admin`)
+    // this.http.get(`http://localhost:8080/auth/`)
+
+    this.kc.getProfile();
+
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.kc.getToken()
+      }
+    };
+
+    this.http.get(`${this.serverPath}/auth/realms/${this.kc.realm()}`)  // is working
+      .subscribe(result => {
+        console.log(result);
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  account1() {
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + this.kc.getToken()
+      }
+    };
+
+    this.http.get(`${this.serverPath}/auth/${this.kc.realm()}/users`)  // is working
+      .subscribe(result => {
+        console.log(result);
+      }, error => {
+        console.log(error);
+      });
   }
 
   request(endpoint: string) {
